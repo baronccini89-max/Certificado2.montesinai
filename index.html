@@ -30,6 +30,7 @@
             <div class="tabs">
                 <button class="tab-btn active" data-tab="generate">Gerar Certificado</button>
                 <button class="tab-btn" data-tab="manage">Gerenciar Dados</button>
+                <button class="tab-btn" data-tab="config">Configurações API</button>
             </div>
 
             <div id="generateTab" class="tab-content active">
@@ -135,6 +136,57 @@
                     </div>
                 </div>
             </div>
+
+            <div id="configTab" class="tab-content">
+                <div class="config-section">
+                    <h3>⚙️ Configurações de API</h3>
+                    <p class="config-info">Configure as credenciais para envio automático de certificados via WhatsApp e E-mail.</p>
+                    
+                    <div class="config-form">
+                        <h4>📧 EmailJS</h4>
+                        <p class="service-info">
+                            <a href="https://www.emailjs.com/" target="_blank">Criar conta gratuita no EmailJS</a>
+                        </p>
+                        <div class="form-group">
+                            <label>Service ID:</label>
+                            <input type="text" id="emailjsServiceId" placeholder="seu_service_id">
+                        </div>
+                        <div class="form-group">
+                            <label>Template ID:</label>
+                            <input type="text" id="emailjsTemplateId" placeholder="seu_template_id">
+                        </div>
+                        <div class="form-group">
+                            <label>Public Key:</label>
+                            <input type="text" id="emailjsPublicKey" placeholder="sua_public_key">
+                        </div>
+                    </div>
+
+                    <div class="config-form">
+                        <h4>📱 Twilio WhatsApp</h4>
+                        <p class="service-info">
+                            <a href="https://www.twilio.com/console" target="_blank">Criar conta no Twilio</a> (requer verificação)
+                        </p>
+                        <div class="form-group">
+                            <label>Account SID:</label>
+                            <input type="text" id="twilioAccountSid" placeholder="seu_account_sid">
+                        </div>
+                        <div class="form-group">
+                            <label>Auth Token:</label>
+                            <input type="password" id="twilioAuthToken" placeholder="seu_auth_token">
+                        </div>
+                        <div class="form-group">
+                            <label>WhatsApp Number (formato: +5551999999999):</label>
+                            <input type="text" id="twilioWhatsappNumber" placeholder="+5551999999999">
+                        </div>
+                    </div>
+
+                    <div class="button-group">
+                        <button id="saveConfigBtn" class="btn-primary">Salvar Configurações</button>
+                        <button id="testConfigBtn" class="btn-secondary">Testar Conexões</button>
+                    </div>
+                    <div id="configStatus" class="config-status"></div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -172,10 +224,40 @@
                     </div>
                 </div>
             </div>
-            <button id="downloadPdfBtn" class="btn-download">Baixar PDF</button>
+            <div class="action-buttons">
+                <button id="downloadPdfBtn" class="btn-action btn-download">
+                    <span class="btn-icon">📥</span> Baixar PDF
+                </button>
+                <button id="shareWhatsappBtn" class="btn-action btn-whatsapp">
+                    <span class="btn-icon">📱</span> Compartilhar WhatsApp
+                </button>
+                <button id="shareEmailBtn" class="btn-action btn-email">
+                    <span class="btn-icon">📧</span> Enviar por E-mail
+                </button>
+            </div>
         </div>
     </div>
 
+    <div id="sendModal" class="modal" style="display: none;">
+        <div class="modal-content send-modal-content">
+            <span class="close" id="closeSendModal">&times;</span>
+            <h2 id="sendModalTitle">Enviar Certificado</h2>
+            <form id="sendForm">
+                <div class="form-group">
+                    <label id="sendModalLabel">Destinatário:</label>
+                    <input type="text" id="sendRecipient" required>
+                    <small id="sendModalHint" class="hint-text"></small>
+                </div>
+                <div class="button-group">
+                    <button type="submit" class="btn-primary" id="confirmSendBtn">Enviar</button>
+                    <button type="button" class="btn-secondary" id="cancelSendBtn">Cancelar</button>
+                </div>
+                <div id="sendStatus" class="send-status"></div>
+            </form>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <script src="script.js"></script>
 </body>
