@@ -49,13 +49,14 @@ function loadApiConfig() {
     const stored = localStorage.getItem('apiConfig');
     if (stored) {
         Object.assign(apiConfig, JSON.parse(stored));
-        document.getElementById('emailjsServiceId').value = apiConfig.emailjs.serviceId;
-        document.getElementById('emailjsTemplateId').value = apiConfig.emailjs.templateId;
-        document.getElementById('emailjsPublicKey').value = apiConfig.emailjs.publicKey;
-        document.getElementById('twilioAccountSid').value = apiConfig.twilio.accountSid;
-        document.getElementById('twilioAuthToken').value = apiConfig.twilio.authToken;
-        document.getElementById('twilioWhatsappNumber').value = apiConfig.twilio.whatsappNumber;
     }
+    
+    document.getElementById('emailjsServiceId').value = apiConfig.emailjs.serviceId;
+    document.getElementById('emailjsTemplateId').value = apiConfig.emailjs.templateId;
+    document.getElementById('emailjsPublicKey').value = apiConfig.emailjs.publicKey;
+    document.getElementById('twilioAccountSid').value = apiConfig.twilio.accountSid;
+    document.getElementById('twilioAuthToken').value = apiConfig.twilio.authToken;
+    document.getElementById('twilioWhatsappNumber').value = apiConfig.twilio.whatsappNumber;
 }
 
 function saveApiConfig() {
@@ -390,31 +391,54 @@ async function sendViaEmail(email, pdfBlob) {
         throw new Error('Configure o Template ID do EmailJS nas Configurações API');
     }
     
-    emailjs.init(apiConfig.emailjs.publicKey);
-    
-    const pdfBase64 = await blobToBase64(pdfBlob);
-    
-    const templateParams = {
-        to_email: email,
-        nome_irmao: nome,
-        tipo_sessao: sessao,
-        grau: grau,
-        data: data,
-        pdf_content: pdfBase64.split(',')[1],
-        reply_to: email
-    };
-    
-    const response = await emailjs.send(
-        apiConfig.emailjs.serviceId,
-        apiConfig.emailjs.templateId,
-        templateParams
-    );
-    
-    if (response.status !== 200) {
-        throw new Error('Erro ao enviar e-mail. Verifique as configurações.');
+    try {
+        emailjs.init(apiConfig.emailjs.publicKey);
+        
+        const certificate = document.getElementById('certificate');
+        const canvas = await html2canvas(certificate, {
+            scale: 2,
+            useCORS: true,
+            backgroundColor: '#ffffff',
+            logging: false
+        });
+        
+        const certificateImage = canvas.toDataURL('image/jpeg', 0.92);
+        
+        const templateParams = {
+            to_email: email,
+            to_name: nome,
+            nome_irmao: nome,
+            tipo_sessao: sessao,
+            grau: grau,
+            data: data,
+            reply_to: 'secretaria.lojamontesinai@outlook.com',
+            certificate_image: certificateImage
+        };
+        
+        console.log('Enviando e-mail com EmailJS...');
+        console.log('Destinatário:', email);
+        
+        const response = await emailjs.send(
+            apiConfig.emailjs.serviceId,
+            apiConfig.emailjs.templateId,
+            templateParams
+        );
+        
+        console.log('E-mail enviado com sucesso!', response);
+        
+        if (response.status !== 200) {
+            throw new Error(`Erro ao enviar e-mail. Status: ${response.status}`);
+        }
+        
+        return response;
+        
+    } catch (error) {
+        console.error('Erro detalhado:', error);
+        if (error.text) {
+            throw new Error(`Erro EmailJS: ${error.text}`);
+        }
+        throw new Error(error.message || 'Erro ao enviar e-mail. Verifique as configurações e o template.');
     }
-    
-    return response;
 }
 
 function blobToBase64(blob) {
@@ -426,47 +450,26 @@ function blobToBase64(blob) {
     });
 }
 
-document.getElementById('saveConfigBtn').addEventListener('click', function() {
-    saveApiConfig();
-    const statusDiv = document.getElementById('configStatus');
-    statusDiv.className = 'config-status success';
-    statusDiv.textContent = 'Configurações salvas com sucesso!';
-    setTimeout(() => {
-        statusDiv.className = 'config-status';
-        statusDiv.textContent = '';
-    }, 3000);
-});
-
 document.getElementById('testConfigBtn').addEventListener('click', async function() {
     const statusDiv = document.getElementById('configStatus');
     statusDiv.className = 'config-status info';
-    statusDiv.textContent = 'Testando conexões...';
+    statusDiv.textContent = '🔄 Testando conexão EmailJS...';
     
-    let errors = [];
-    
-    if (apiConfig.emailjs.publicKey) {
-        try {
-            emailjs.init(apiConfig.emailjs.publicKey);
-            statusDiv.textContent += '\n✅ EmailJS: Configurado';
-        } catch (e) {
-            errors.push('EmailJS: ' + e.message);
-        }
-    } else {
-        errors.push('EmailJS não configurado');
-    }
-    
-    if (apiConfig.twilio.accountSid && apiConfig.twilio.authToken) {
-        statusDiv.textContent += '\n✅ Twilio: Credenciais salvas (teste real requer envio)';
-    } else {
-        errors.push('Twilio não configurado');
-    }
-    
-    if (errors.length === 0) {
+    try {
+        emailjs.init(apiConfig.emailjs.publicKey);
+        
         statusDiv.className = 'config-status success';
-        statusDiv.textContent = '✅ Todas as configurações estão OK!';
-    } else {
+        statusDiv.innerHTML = `
+            ✅ <strong>EmailJS Configurado com Sucesso!</strong><br><br>
+            📧 Service ID: ${apiConfig.emailjs.serviceId}<br>
+            📝 Template ID: ${apiConfig.emailjs.templateId}<br>
+            🔑 Public Key: ${apiConfig.emailjs.publicKey.substring(0, 10)}...<br><br>
+            <strong>Status:</strong> Pronto para enviar e-mails!<br>
+            <strong>Limite:</strong> 200 e-mails/mês (plano gratuito)
+        `;
+    } catch (error) {
         statusDiv.className = 'config-status error';
-        statusDiv.textContent = '❌ Erros encontrados:\n' + errors.join('\n');
+        statusDiv.textContent = '❌ Erro ao testar EmailJS: ' + error.message;
     }
 });
 

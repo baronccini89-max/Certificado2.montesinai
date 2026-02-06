@@ -140,49 +140,52 @@
             <div id="configTab" class="tab-content">
                 <div class="config-section">
                     <h3>⚙️ Configurações de API</h3>
-                    <p class="config-info">Configure as credenciais para envio automático de certificados via WhatsApp e E-mail.</p>
+                    <p class="config-info">
+                        <strong>✅ Sistema totalmente configurado!</strong><br>
+                        O EmailJS está pré-configurado e pronto para enviar certificados por e-mail automaticamente.
+                        Não é necessário configurar nada manualmente.
+                    </p>
                     
-                    <div class="config-form">
-                        <h4>📧 EmailJS</h4>
-                        <p class="service-info">
-                            <a href="https://www.emailjs.com/" target="_blank">Criar conta gratuita no EmailJS</a>
+                    <div class="config-form config-readonly">
+                        <h4>📧 EmailJS (Pré-configurado)</h4>
+                        <p class="service-info success-msg">
+                            ✅ Configuração completa! Sistema pronto para enviar e-mails.
                         </p>
                         <div class="form-group">
                             <label>Service ID:</label>
-                            <input type="text" id="emailjsServiceId" placeholder="seu_service_id">
+                            <input type="text" id="emailjsServiceId" readonly class="readonly-input">
                         </div>
                         <div class="form-group">
                             <label>Template ID:</label>
-                            <input type="text" id="emailjsTemplateId" placeholder="seu_template_id">
+                            <input type="text" id="emailjsTemplateId" readonly class="readonly-input">
                         </div>
                         <div class="form-group">
                             <label>Public Key:</label>
-                            <input type="text" id="emailjsPublicKey" placeholder="sua_public_key">
+                            <input type="text" id="emailjsPublicKey" readonly class="readonly-input">
                         </div>
                     </div>
 
-                    <div class="config-form">
-                        <h4>📱 Twilio WhatsApp</h4>
+                    <div class="config-form" style="opacity: 0.5;">
+                        <h4>📱 Twilio WhatsApp (Opcional - Desabilitado)</h4>
                         <p class="service-info">
-                            <a href="https://www.twilio.com/console" target="_blank">Criar conta no Twilio</a> (requer verificação)
+                            Funcionalidade disponível apenas com configuração do Twilio
                         </p>
                         <div class="form-group">
                             <label>Account SID:</label>
-                            <input type="text" id="twilioAccountSid" placeholder="seu_account_sid">
+                            <input type="text" id="twilioAccountSid" placeholder="Não configurado" disabled>
                         </div>
                         <div class="form-group">
                             <label>Auth Token:</label>
-                            <input type="password" id="twilioAuthToken" placeholder="seu_auth_token">
+                            <input type="password" id="twilioAuthToken" placeholder="Não configurado" disabled>
                         </div>
                         <div class="form-group">
-                            <label>WhatsApp Number (formato: +5551999999999):</label>
-                            <input type="text" id="twilioWhatsappNumber" placeholder="+5551999999999">
+                            <label>WhatsApp Number:</label>
+                            <input type="text" id="twilioWhatsappNumber" placeholder="Não configurado" disabled>
                         </div>
                     </div>
 
                     <div class="button-group">
-                        <button id="saveConfigBtn" class="btn-primary">Salvar Configurações</button>
-                        <button id="testConfigBtn" class="btn-secondary">Testar Conexões</button>
+                        <button id="testConfigBtn" class="btn-primary">✅ Testar Conexão EmailJS</button>
                     </div>
                     <div id="configStatus" class="config-status"></div>
                 </div>
@@ -259,6 +262,7 @@
 
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
