@@ -410,7 +410,7 @@ body {
 
 .certificate-body {
     margin: 50px 0;
-    text-align: center;
+    text-align: justify;
     line-height: 2;
     position: relative;
 }
@@ -426,7 +426,6 @@ body {
     font-size: 18px;
     color: #1a1a2e;
     line-height: 2.2;
-    margin-bottom: 15px;
 }
 
 .highlight {
@@ -435,20 +434,10 @@ body {
     color: #0f3460;
 }
 
-.name-section {
-    margin: 30px 0;
-    padding: 20px;
-    background: linear-gradient(135deg, rgba(212,175,55,0.1), rgba(244,208,63,0.1));
-    border-left: 4px solid #d4af37;
-    border-right: 4px solid #d4af37;
-}
-
 .name {
-    font-size: 24px;
+    font-size: 18px;
     font-weight: 700;
     color: #0f3460;
-    letter-spacing: 1px;
-    text-transform: uppercase;
 }
 
 .signatures {
