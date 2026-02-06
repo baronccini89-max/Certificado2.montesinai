@@ -171,11 +171,23 @@ document.getElementById('downloadPdfBtn').addEventListener('click', function() {
     const data = document.getElementById('certData').textContent.replace(/\s+/g, '_');
     
     const opt = {
-        margin: 10,
+        margin: [5, 5, 5, 5],
         filename: `Certificado_${nome}_${data}.pdf`,
         image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 2, useCORS: true },
-        jsPDF: { unit: 'mm', format: 'a4', orientation: 'landscape' }
+        html2canvas: { 
+            scale: 1.5,
+            useCORS: true,
+            letterRendering: true,
+            allowTaint: true,
+            logging: false
+        },
+        jsPDF: { 
+            unit: 'mm', 
+            format: 'a4', 
+            orientation: 'landscape',
+            compress: true
+        },
+        pagebreak: { mode: 'avoid-all' }
     };
     
     html2pdf().set(opt).from(certificate).save();

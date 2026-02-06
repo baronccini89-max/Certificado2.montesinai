@@ -311,28 +311,29 @@ body {
     padding: 0;
     margin-bottom: 20px;
     box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    max-width: 100%;
 }
 
 .certificate-border {
-    border: 8px solid #d4af37;
+    border: 6px solid #d4af37;
     border-image: linear-gradient(135deg, #d4af37, #f4d03f, #d4af37) 1;
-    padding: 3px;
+    padding: 2px;
     background: linear-gradient(135deg, #d4af37, #f4d03f, #d4af37);
 }
 
 .certificate-inner {
     background: #ffffff;
-    padding: 50px;
+    padding: 30px 40px;
     position: relative;
 }
 
 .certificate-inner::before {
     content: '';
     position: absolute;
-    top: 20px;
-    left: 20px;
-    right: 20px;
-    bottom: 20px;
+    top: 15px;
+    left: 15px;
+    right: 15px;
+    bottom: 15px;
     border: 2px solid #d4af37;
     pointer-events: none;
     opacity: 0.3;
@@ -342,8 +343,8 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 40px;
-    gap: 30px;
+    margin-bottom: 25px;
+    gap: 25px;
     position: relative;
 }
 
@@ -352,8 +353,8 @@ body {
 }
 
 .logo-img {
-    width: 180px;
-    height: 180px;
+    width: 140px;
+    height: 140px;
     object-fit: contain;
     filter: drop-shadow(0 4px 8px rgba(212,175,55,0.3));
 }
@@ -364,54 +365,54 @@ body {
 }
 
 .title-top {
-    font-size: 22px;
+    font-size: 18px;
     color: #1a1a2e;
-    margin-bottom: 8px;
+    margin-bottom: 5px;
     font-weight: 600;
     letter-spacing: 0.5px;
     text-transform: uppercase;
 }
 
 .title-main {
-    font-size: 36px;
+    font-size: 28px;
     color: #0f3460;
-    margin-bottom: 20px;
+    margin-bottom: 12px;
     font-weight: 700;
     letter-spacing: 1px;
     text-shadow: 2px 2px 4px rgba(212,175,55,0.2);
 }
 
 .divider {
-    width: 200px;
-    height: 3px;
+    width: 150px;
+    height: 2px;
     background: linear-gradient(90deg, transparent, #d4af37, transparent);
-    margin: 15px auto;
+    margin: 10px auto;
 }
 
 .subtitle {
-    font-size: 15px;
+    font-size: 13px;
     color: #555;
-    margin-bottom: 8px;
+    margin-bottom: 5px;
     font-style: italic;
 }
 
 .founded {
-    font-size: 13px;
+    font-size: 11px;
     color: #666;
-    margin-bottom: 5px;
+    margin-bottom: 3px;
 }
 
 .grande-oriente {
-    font-size: 15px;
+    font-size: 13px;
     color: #0f3460;
     font-weight: bold;
-    margin-top: 10px;
+    margin-top: 5px;
 }
 
 .certificate-body {
-    margin: 50px 0;
+    margin: 30px 0;
     text-align: justify;
-    line-height: 2;
+    line-height: 1.8;
     position: relative;
 }
 
@@ -419,13 +420,13 @@ body {
     width: 100%;
     height: 2px;
     background: linear-gradient(90deg, transparent, #d4af37, transparent);
-    margin: 30px 0;
+    margin: 20px 0;
 }
 
 .certificate-text {
-    font-size: 18px;
+    font-size: 16px;
     color: #1a1a2e;
-    line-height: 2.2;
+    line-height: 2;
 }
 
 .highlight {
@@ -435,19 +436,19 @@ body {
 }
 
 .name {
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 700;
     color: #0f3460;
 }
 
 .signatures {
-    margin-top: 60px;
+    margin-top: 40px;
     text-align: center;
 }
 
 .signatures-img {
     width: 100%;
-    max-width: 800px;
+    max-width: 700px;
     height: auto;
     margin: 0 auto;
     display: block;
